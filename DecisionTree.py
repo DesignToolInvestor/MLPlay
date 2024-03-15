@@ -22,11 +22,31 @@ def SplineOrd0(tree, index=0):
   rightIndex = tree.children_right[index]
 
   if leftIndex == rightIndex:    # is a leaf
-    return float(tree.value[index])
+    return [float(tree.value[index])]
 
   else:
-    leftResult = SplineOrd0(tree, leftIndex)
+    result = SplineOrd0(tree, leftIndex)
     rightResult = SplineOrd0(tree, rightIndex)
 
-    result = leftResult.append(tree.threshold(index)).extend(rightResult)
+    result.append(tree.threshold[index])
+    result.extend(rightResult)
+
     return result
+
+
+def Curve(spline, lim):
+  lowLim,highLim = lim
+  nSeg = (len(spline) + 1) // 2
+
+  result = [(lowLim,spline[0])]
+  for segNum in range(nSeg - 1):
+    segVal = spline[2*segNum]
+    knot = spline[2*segNum + 1]
+    nextVal = spline[2*segNum + 2]
+
+    result.append((knot,segVal))
+    result.append((knot,nextVal))
+
+  result.append((highLim, spline[len(spline)- 1]))
+
+  return result
