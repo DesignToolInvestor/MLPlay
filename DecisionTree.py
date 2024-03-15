@@ -5,6 +5,8 @@
 # This code group contains functions reformulate the information in the decision tree
 # created by sklearn.
 
+# TODO: make this a class that inherits from sklearn.tree._tree.Tree
+
 ###############################################################
 # This function converts a 1D tree into a sequence of values interspersed by knot locations,
 # i.e., v[0], k[0], v[1], k[1], ... k[n-1], v[n].  The implied piecewise functions is:
@@ -50,3 +52,7 @@ def Curve(spline, lim):
   result.append((highLim, spline[len(spline)- 1]))
 
   return result
+
+
+def NumKnot(tree):
+  return len(tree.threshold) // 2
