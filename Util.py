@@ -3,7 +3,6 @@
 #
 
 import numpy as np
-from math import floor
 import random
 
 
